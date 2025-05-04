@@ -21,7 +21,7 @@ export const AIQuestions = pgTable('ai_questions', {
   id: serial('id').primaryKey(),
   userId: varchar('userId').notNull(),
   createdBy: varchar('createdBy').notNull(),
-  courseid: integer('courseid').references(() => Courses.id),
+  
   topicid: integer('topicid').references(() => Topics.id),
   question: json('question').notNull(),
   questionType: varchar('questionType').default('ai').notNull(), // ✅ NEW
@@ -41,35 +41,37 @@ export const ManualQuestions = pgTable('manual_questions', {
 
 export const Submissions = pgTable('submissions', {
   id: serial('id').primaryKey(),
+
   questionId: integer('questionId').notNull(), // Refers to either AI or Manual
   questionType: varchar('questionType').notNull(), // 'ai' or 'manual'
   submittedcode: text('submittedcode').notNull(),
-  userId: varchar('userId').notNull(), // Clerk user ID who submitted
-  createdBy: varchar('createdBy').notNull(), // Who created the submission (usually same as userId)
+  userId: varchar('userId').notNull(), // Clerk user email who submitted wait until it fetched
   language: varchar('language'),
-  output: text('output'),
   passed: boolean('passed'),
   timeTaken: varchar('timeTaken'),
-  attempts: integer('attempts'),
+  totalTestCases: integer('totalTestCases'),
+  totalTestCasesPassed: integer('totalTestCasesPassed'),
+  createdBy:varchar('createdBy'),
+  
   createdAt: timestamp('createdAt').defaultNow(),
+});
+
+
+export const Analytics = pgTable('analytics', {
+ 
+  id: serial('id').primaryKey(),
+  userId:varchar('userId').notNull(), //clerk user email
+  courseId: integer('courseId').references(() => Courses.id),
+  topicId: integer('topicId').references(() => Topics.id),
+  questionId: integer('questionId').notNull(),
+  questionType: varchar('questionType').notNull(),
+  weakness: text('weakness'),
+  weakTopics:json('weaktopics'),
+  strongTopics:json('strongtopics'),
+  suggestions: json('suggestion'),
+
+  startingKnowledge:integer('startingKnowledge'),
+  currentKnowledge:integer('currentKnowledge'),
   
 });
 
-export const Feedback = pgTable('feedback', {
- 
-  id: serial('id').primaryKey(),
-  questionId: integer('questionId').notNull(),
-  submissionid: integer('submissionid').references(() => Submissions.id),
-  weakness: text('weakness'),
-  suggestion: text('suggestion'),
-});
-
-export const Analytics = pgTable('analytics', {
-  id: serial('id').primaryKey(),
-  userId: varchar('userId').notNull(), 
-  courseid: integer('courseid').references(() => Courses.id),// Clerk user ID
-  topicid: integer('topicid').references(() => Topics.id),
-  totalQatt: integer('totalQatt'),
-  correct: integer('correct'),
-  weakness: text('weakness'),
-});

@@ -6,13 +6,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation"; // Use `next/navigation` for App Directory
 import { db } from "@/utils/db";
 import { Courses } from "@/utils/schema";
-import { useCourseStore } from "@/store/useCourse";
+
 
 export default function CourseCategories() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter(); // Use useRouter from next/navigation for App Directory
- const {setCourse} = useCourseStore();
+ 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -30,11 +30,11 @@ export default function CourseCategories() {
 
   const handleCourseClick = (courseId, courseName) => {
     // Format the course name to lowercase with dashes in between
-    setCourse(courseId, courseName);
+    
     const formattedCourseName = courseName.toLowerCase().replace(/\s+/g, "-");
 
     // Programmatically navigate to /dashboard/courses/{courseId}-{formattedCourseName}
-    router.push(`/dashboard/courses/${formattedCourseName}?courseId=${courseId}&courseName=${courseName}`);
+    router.push(`/dashboard/courses/${formattedCourseName}`);
   };
 
   return (
