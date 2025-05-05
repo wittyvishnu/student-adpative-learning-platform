@@ -14,7 +14,7 @@ export default function LeaderboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentUserId, setCurrentUserId] = useState(null);
-  if(type=='ai') return <div>NO Leaderboard for Ai generated Questions</div>
+  if(type!='manual') return <div>NO Leaderboard for Ai generated Questions</div>
 
   useEffect(() => {
     if (isLoaded && user) {

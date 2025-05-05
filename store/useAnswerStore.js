@@ -15,6 +15,15 @@ export const useAnswerStore = create((set) => ({
   language: "c", // Add language state
   code: "", // Add code state
   fullName:"",
+  submittedCode:"",
+  triggertab:"",
+  setTriggerTab:(tab)=>{
+    set({triggertab:tab})
+  },
+  setSubmittedCode:(code)=>{
+    console.log("[Zustand] setSubmittecode:",code);
+    set({submittedCode:code});
+  },
   setCourseName: (name) => {
     console.log("[Zustand] setCourseName:", name);
     set({ coursename: name });

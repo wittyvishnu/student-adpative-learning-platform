@@ -14,8 +14,8 @@ import { ManualQuestions } from "@/utils/schema"
 import { and, eq } from "drizzle-orm"
 import SubmissionsPage from "@/components/problem/submission"
 import LeaderboardPage from "@/components/problem/LeaderboardPage"
-
-
+import {fetchAnalyticsByContext} from "@/utils/aigenerated"
+import AnalyticsPage from "@/components/problem/AnalyticsPage"
 
 export default function ProblemPage() { 
   const router = useRouter();
@@ -29,6 +29,11 @@ const {
   userId,
   setType,
   setFullName,
+  setQuestion,
+  setCourseName,
+  setTopicName,
+  triggerTab
+  
 } = useAnswerStore();
 
 
@@ -36,6 +41,10 @@ const { topic: formattedTopic, problem: formattedProblem, course: formattedCours
 const decodedTopicName = formattedTopic.replace(/-/g, " ").toLowerCase();
 const decodedProblemName = formattedProblem.replace(/-/g, " ").toLowerCase();
 const decodedCourseName = formattedCourse.replace(/-/g, " ").toLowerCase();
+useEffect(()=>{
+  setCourseName(decodedCourseName);
+ setTopicName(decodedTopicName);
+},[decodedCourseName,decodedTopicName]);
 
 
 const searchParams = useSearchParams();
@@ -101,6 +110,8 @@ useEffect(() => {
 
       console.log("Data fetched:", data);
       setSolveQuestion(data[0]);
+      setQuestion(data[0].question);
+      fetchAnalyticsByContext();
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -108,6 +119,7 @@ useEffect(() => {
 
   fetchData();
 }, [courseid, topicid, questionid, userId, tableName]);
+
 
   
  
@@ -191,7 +203,7 @@ useEffect(() => {
             <div className="py-8 text-center text-gray-500">Discussions will appear here</div>
           </TabsContent>
           <TabsContent value="analysis">
-            <div className="py-8 text-center text-gray-500">Analysis will appear here</div>
+            <div className="py-8 text-center text-gray-500"><AnalyticsPage/></div>
           </TabsContent>
         </Tabs>
         </div>

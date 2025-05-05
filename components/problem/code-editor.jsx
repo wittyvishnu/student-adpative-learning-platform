@@ -28,6 +28,7 @@ import {
   AlertCircle,
   CheckCircle,
 } from "lucide-react";
+import { updateUserAnalytics } from "@/utils/aigenerated";
 
 // Language templates
 const languageTemplates = {
@@ -80,7 +81,7 @@ export default function CodeEditor({ solveQuestion }) {
   const [statusMessage, setStatusMessage] = useState("");
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const { language, setLanguage, code, setCode } = useAnswerStore();
+  const { language, setLanguage, code, setCode ,setSubmittedCode} = useAnswerStore();
 
 useEffect(() => {
   if (!code) {
@@ -95,7 +96,7 @@ useEffect(() => {
 
 
   const { user ,isLoaded} = useUser();
-  const { attempts, type, questionid, setAttempts, userid,fullName } = useAnswerStore();
+  const { attempts, type, questionid, setAttempts, userid,fullName,setTriggerTab } = useAnswerStore();
 
   
   useEffect(() => {
@@ -186,7 +187,7 @@ useEffect(() => {
     setIsRunning(true);
     setStatus("running");
     setOutput("");
-
+  
     try {
       const langConfig = languageConfigs[language];
       const response = await fetch("https://emkc.org/api/v2/piston/execute", {
@@ -202,14 +203,18 @@ useEffect(() => {
           run_timeout: 5000,
         }),
       });
-
+  
       const result = await response.json();
       const output = result.run?.output || "";
       const error = result.run?.stderr || result.compile?.stderr || "";
-
+  
       setOutput(`=== Custom Input Execution ===\n\nInput:\n${customInput}\n\nOutput:\n${output}${error ? `\nError:\n${error}` : ""}`);
       setStatus("success");
       setStatusMessage("Custom input executed successfully!");
+      
+      // Set the submitted code in the store
+      setSubmittedCode(code); // <-- Add this line
+      
     } catch (error) {
       setOutput("Failed to connect to the execution service.");
       setStatus("error");
@@ -227,7 +232,7 @@ useEffect(() => {
   
     if (isSubmission) setIsSubmitting(true);
     else setIsRunning(true);
-  
+    setSubmittedCode(code); 
     setStatus("running");
     setOutput("");
     let passedCount = 0;
@@ -307,6 +312,15 @@ useEffect(() => {
           
           setAttempts(newAttempts);
           console.log(`[DEBUG] Updated attempts in store to ${newAttempts}`);
+          try {
+            console.log("[DEBUG] Starting analytics update...");
+            await updateUserAnalytics(code, allPassed);
+            console.log("[DEBUG] Analytics update completed");
+            setTriggerTab('analysis');
+          } catch (analyticsError) {
+            console.error("❌ Analytics update failed:", analyticsError);
+            // Don't fail the submission if analytics fails
+          }
         } catch (dbError) {
           console.error("❌ Database insertion failed:", dbError);
           throw dbError;
