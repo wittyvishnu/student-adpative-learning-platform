@@ -20,8 +20,7 @@ export const Topics = pgTable('topics', {
 export const AIQuestions = pgTable('ai_questions', {
   id: serial('id').primaryKey(),
   userId: varchar('userId').notNull(),
-  createdBy: varchar('createdBy').notNull(),
-  
+  courseid: integer('courseid').references(() => Courses.id),
   topicid: integer('topicid').references(() => Topics.id),
   question: json('question').notNull(),
   questionType: varchar('questionType').default('ai').notNull(), // ✅ NEW

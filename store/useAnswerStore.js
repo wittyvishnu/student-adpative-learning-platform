@@ -18,6 +18,7 @@ export const useAnswerStore = create((set) => ({
   submittedCode:"",
   triggertab:"",
   setTriggerTab:(tab)=>{
+    console.log("[Zustand] setTriggerTab:",tab);
     set({triggertab:tab})
   },
   setSubmittedCode:(code)=>{

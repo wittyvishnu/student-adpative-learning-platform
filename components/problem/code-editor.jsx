@@ -316,7 +316,8 @@ useEffect(() => {
             console.log("[DEBUG] Starting analytics update...");
             await updateUserAnalytics(code, allPassed);
             console.log("[DEBUG] Analytics update completed");
-            setTriggerTab('analysis');
+            useAnswerStore.getState().setTriggerTab("analysis");
+
           } catch (analyticsError) {
             console.error("❌ Analytics update failed:", analyticsError);
             // Don't fail the submission if analytics fails
@@ -493,7 +494,7 @@ useEffect(() => {
             onChange={handleFileUpload}
           />
         </div>
-        <div className="flex gap-2">
+        <div className="flex  gap-2">
           <Button
             variant="outline"
             className="text-sm"
