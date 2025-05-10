@@ -20,12 +20,13 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Pin IT",
-  description: "student adapative learning platform",
+  description: "Student adaptive learning platform",
   icons: {
-    icon: "/image.png",
-    
+    icon: "/image.png", // Your main icon
+    shortcut: "/image.png", // Shortcut icon (same as the main icon here)
   },
 };
+
 
 export default function RootLayout({ children }) {
   return (
