@@ -2,7 +2,7 @@ import { ArrowDown, ArrowUp } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
 
-type LeaderboardType = "user" | "group"
+const LeaderboardType = "user" | "group"
 
 const userLeaderboard = [
   { name: "Jesse Thomas", points: 637, correct: "96%", rank: 1, change: "up" },
@@ -30,7 +30,7 @@ const groupLeaderboard = [
   { name: "Northwest Region", points: 52, correct: "79%", rank: 10, change: "up" },
 ]
 
-export default function LeaderboardTable({ type }: { type: LeaderboardType }) {
+export default function LeaderboardTable({ type }) {
   const data = type === "user" ? userLeaderboard : groupLeaderboard
 
   return (

@@ -1,89 +1,137 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check, Star } from "lucide-react"
+import Logo from "@/components/layout/logo";
+import { useState } from "react"
 import Link from "next/link"
+import { Menu, BarChart2, LayoutDashboard } from "lucide-react"
+import UserMenu from "@/components/layout/user-menu"
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+
+
+
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 
 export default function HomePage() {
+  const router = useRouter();
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col  bg-[#f9f9f9]">
+   <header className="border-b  bg-[#f9f9f9] sticky top-0 z-50">
+  <div className="container flex h-16 items-center justify-between px-4">
+    <div className="flex items-center gap-6">
+      {/* Logo - hidden on small screens */}
+      <div className="hidden md:block ml-5 mr-5">
+        <Logo />
+      </div>
+
+      {/* Mobile menu button */}
+      <Sheet>
+        <SheetTrigger asChild className="md:hidden">
+          <Button variant="ghost" size="icon" aria-label="Menu">
+            <Menu className="h-5 w-5" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left" className="w-[240px] sm:w-[300px]">
+          <nav className="flex flex-col gap-4 mt-8">
+            {[
+              { href: "#features", label: "Features" },
+              { href: "#how-it-works", label: "How It Works" },
+              { href: "#testimonials", label: "Testimonials" },
+              { href: "#cta", label: "Get Started" },
+            ].map(({ href, label }) => (
+              <SheetClose asChild key={href}>
+                <a
+                  href={href}
+                  className="flex items-center gap-2 px-2 py-2 text-sm font-medium rounded-md hover:bg-gray-100"
+                >
+                  {label}
+                </a>
+              </SheetClose>
+            ))}
+          </nav>
+        </SheetContent>
+      </Sheet>
+
+      {/* Desktop navigation */}
+      <nav className="hidden md:flex gap-6 text-sm font-semibold">
+        <a href="#features" className="hover:text-[#9efa35] transition-colors">Features</a>
+        <a href="#how-it-works" className="hover:text-[#9efa35] transition-colors">How It Works</a>
+        <a href="#testimonials" className="hover:text-[#9efa35] transition-colors">Testimonials</a>
+        
+      </nav>
+    </div>
+
+    {/* Right - User Menu or Sign Up Button */}
+    <div className="flex items-center gap-4">
+     <Button onClick={() => router.push("/dashboard")} size="lg"  className="border-black text-black bg-[#9efa35] hover:bg-[#9efa32]- cursor-pointer">
+                  Get Started
+      </Button>
+    </div>
+  </div>
+</header>
+
       {/* Hero Section */}
-      <section className="bg-white py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16 items-center">
-            <div className="space-y-6">
-              <div className="inline-block bg-[#9efa35] px-4 py-1 text-sm font-medium rounded-full">
-                AI-Powered Learning
-              </div>
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-                Learning That <br />
-                <span className="text-[#9efa35]">Adapts to You</span>
-              </h1>
-              <p className="text-gray-600 md:text-xl max-w-[600px]">
-                Our AI-powered learning platform helps students master any subject — from coding and math to science and
-                more — by adapting in real-time to your performance and learning needs.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-black text-white hover:bg-gray-800">
-                  Start Learning Smarter
-                </Button>
-                <Button size="lg" variant="outline" className="border-black">
-                  View Courses
-                </Button>
-              </div>
-              <div className="flex items-center gap-4 pt-4">
-                <div className="flex -space-x-2">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="w-8 h-8 rounded-full bg-gray-200 border-2 border-white"></div>
-                  ))}
-                </div>
-                <p className="text-sm text-gray-600">
-                  <span className="font-bold">10,000+</span> students already learning
-                </p>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#9efa35]/20 to-transparent rounded-3xl transform rotate-3"></div>
-              <div className="relative z-10 bg-white rounded-3xl shadow-xl p-6 md:p-10">
-                <div className="aspect-video bg-gray-100 rounded-lg mb-6 flex items-center justify-center">
-                  <div className="w-16 h-16 bg-[#9efa35] rounded-full flex items-center justify-center">
-                    <div className="w-8 h-8 text-black">▶️</div>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-bold">Data Structures & Algorithms</h3>
-                    <div className="flex items-center">
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    </div>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-gray-200"></div>
-                      <span>John Smith</span>
-                    </div>
-                    <span className="text-gray-500">12 lessons • 6 hours</span>
-                  </div>
-                  <div className="pt-4">
-                    <div className="h-2 bg-gray-100 rounded-full">
-                      <div className="h-full w-3/4 bg-[#9efa35] rounded-full"></div>
-                    </div>
-                    <div className="flex justify-between text-xs text-gray-500 mt-1">
-                      <span>Progress</span>
-                      <span>75%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <section className="w-full  py-20">
+  <div className="container mx-auto px-4 md:px-6">
+    <div className="flex flex-col-reverse md:flex-row items-center justify-around gap-10">
+      {/* Left Content */}
+      <div className="text-center md:text-left max-w-xl space-y-6">
+        <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight">
+          Learning That <br />
+          <span className="text-[#9efa35]">Adapts to You</span>
+        </h1>
+        <p className="text-gray-600 text-lg">
+          Our AI-powered learning platform helps students master any subject — from coding and math to science and more — by adapting in real-time to their performance and learning needs.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <button onClick={() => router.push("/dashboard")}className="bg-black text-white px-6 py-3 rounded-md text-base font-semibold hover:bg-gray-800 transition">
+            Start Learning Smarter
+          </button>
+          <button onClick={() => router.push("/dashboard/courses")} className="border border-black px-6 py-3 rounded-md text-base font-semibold hover:bg-gray-100 transition">
+            Check out Courses
+          </button>
+        </div>
+      </div>
+
+      {/* Right Orbit Visual */}
+      <div className="flex items-center justify-center">
+        <div className="relative w-64 h-64 flex items-center justify-center">
+          {/* Outer Orbit */}
+          <div className="absolute inset-0 border-2 rounded-full border-black animate-spin-slow"></div>
+
+          {/* Inner Orbit */}
+          <div className="absolute inset-6 border border-[#9efa35] rounded-full animate-spin-reverse-slower"></div>
+
+          {/* Center Star */}
+          <div className="z-10 text-3xl">⭐</div>
+
+          {/* Orbiting Icons */}
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse">
+            <div className="w-6 h-6 bg-black rounded-full"></div>
+          </div>
+          <div className="absolute right-2 top-1/3 animate-bounce">
+            <div className="w-8 h-8 rounded-full border border-black flex items-center justify-center text-xl">💖</div>
+          </div>
+          <div className="absolute right-0 bottom-1/3 animate-wiggle">
+            <div className="w-8 h-8 rounded-full border border-black flex items-center justify-center text-xl">▶️</div>
+          </div>
+          <div className="absolute left-0 bottom-1/4 animate-float">
+            <div className="w-8 h-8 rounded-full border border-black flex items-center justify-center text-xl">📍</div>
+          </div>
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 animate-ping">
+            <div className="w-4 h-4 bg-[#9efa35] rounded-full"></div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Features Section */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section id="features" className="py-16 md:py-24 bg-gray-50">
         <div className="container px-4 md:px-6">
           <div className="text-center mb-12">
             <div className="inline-block bg-[#9efa35] px-4 py-1 text-sm font-medium rounded-full mb-4">
@@ -150,79 +198,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Popular Courses Section */}
-      <section className="py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
-            <div>
-              <div className="inline-block bg-[#9efa35] px-4 py-1 text-sm font-medium rounded-full mb-4">
-                Popular Courses
-              </div>
-              <h2 className="text-3xl font-bold md:text-4xl">Start Learning Today</h2>
-            </div>
-            <Link href="/courses" className="mt-4 md:mt-0 flex items-center text-black font-medium hover:underline">
-              View all courses <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Data Structures & Algorithms",
-                category: "Computer Science",
-                lessons: 24,
-                level: "Intermediate",
-                rating: 4.9,
-                image: "/placeholder.svg?height=200&width=400",
-              },
-              {
-                title: "Machine Learning Fundamentals",
-                category: "Artificial Intelligence",
-                lessons: 32,
-                level: "Advanced",
-                rating: 4.8,
-                image: "/placeholder.svg?height=200&width=400",
-              },
-              {
-                title: "Web Development Bootcamp",
-                category: "Programming",
-                lessons: 48,
-                level: "Beginner",
-                rating: 4.7,
-                image: "/placeholder.svg?height=200&width=400",
-              },
-            ].map((course, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="aspect-video bg-gray-100 relative">
-                  <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-xs font-medium">
-                    {course.category}
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">{course.title}</h3>
-                  <div className="flex justify-between text-sm text-gray-600 mb-4">
-                    <span>{course.lessons} lessons</span>
-                    <span>{course.level}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      <span className="ml-1 text-sm font-medium">{course.rating}</span>
-                    </div>
-                    <Button className="bg-[#9efa35] text-black hover:bg-[#8de42d]">Enroll Now</Button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* How It Works Section */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section id="how-it-works" className="py-16 md:py-24 bg-gray-50">
         <div className="container px-4 md:px-6">
           <div className="text-center mb-12">
             <div className="inline-block bg-[#9efa35] px-4 py-1 text-sm font-medium rounded-full mb-4">
@@ -276,64 +254,72 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="text-center mb-12">
-            <div className="inline-block bg-[#9efa35] px-4 py-1 text-sm font-medium rounded-full mb-4">
-              Testimonials
-            </div>
-            <h2 className="text-3xl font-bold md:text-4xl">What Our Students Say</h2>
-          </div>
+    <section id="testimonials" className="py-16 md:py-24">
+  <div className="container px-4 md:px-6">
+    <div className="text-center mb-12">
+      <div className="inline-block bg-[#9efa35] px-4 py-1 text-sm font-medium rounded-full mb-4">
+        Testimonials
+      </div>
+      <h2 className="text-3xl font-bold md:text-4xl">What Our Students Say</h2>
+    </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Sarah Johnson",
-                role: "Software Engineer",
-                image: "/placeholder.svg?height=100&width=100",
-                content:
-                  "Positivus helped me prepare for technical interviews in just 2 months. The adaptive learning system identified my weak areas and focused my practice there.",
-              },
-              {
-                name: "Michael Chen",
-                role: "Computer Science Student",
-                image: "/placeholder.svg?height=100&width=100",
-                content:
-                  "I was struggling with data structures until I found Positivus. The personalized feedback on my code helped me understand complex concepts quickly.",
-              },
-              {
-                name: "Emily Rodriguez",
-                role: "Data Scientist",
-                image: "/placeholder.svg?height=100&width=100",
-                content:
-                  "The machine learning course was exactly what I needed to transition into AI. The hands-on projects and real-time guidance made all the difference.",
-              },
-            ].map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-100"
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gray-200"></div>
-                  <div>
-                    <h4 className="font-bold">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-600">{testimonial.role}</p>
-                  </div>
-                </div>
-                <p className="text-gray-600">{testimonial.content}</p>
-                <div className="mt-4 flex">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-              </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {[
+        {
+          name: "Abhi",
+          role: "Software Engineer",
+          image:
+            "https://plus.unsplash.com/premium_photo-1689977807477-a579eda91fa2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+          content:
+            "Pin IT helped me prepare for technical interviews in just 2 months. The adaptive learning system identified my weak areas and focused my practice there.",
+        },
+        {
+          name: "Manoj",
+          role: "Computer Science Student",
+          image:
+            "https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+          content:
+            "I was struggling with data structures until I found Positivus. The personalized feedback on my code helped me understand complex concepts quickly.",
+        },
+        {
+          name: "Mohith",
+          role: "Data Scientist",
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4KfQYNlJojREBWzAqUvLyI3M1Fv2T1Ut9Nh9KNCUNki6dQrJIO36LqQEMvmQ6pTY98c&usqp=CAU",
+          content:
+            "The machine learning course was exactly what I needed to transition into AI. The hands-on projects and real-time guidance made all the difference.",
+        },
+      ].map((testimonial, index) => (
+        <div
+          key={index}
+          className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-100"
+        >
+          <div className="flex items-center gap-4 mb-4">
+            <Image
+              src={testimonial.image}
+              alt={testimonial.name}
+              width={40}
+              height={48}
+              className="rounded-full object-cover"
+            />
+            <div>
+              <h4 className="font-bold">{testimonial.name}</h4>
+              <p className="text-sm text-gray-600">{testimonial.role}</p>
+            </div>
+          </div>
+          <p className="text-gray-600">{testimonial.content}</p>
+          <div className="mt-4 flex">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
             ))}
           </div>
         </div>
-      </section>
-
+      ))}
+    </div>
+  </div>
+</section>
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-black text-white">
+      <section id="cta" className="py-16 md:py-24 bg-black text-white">
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -345,11 +331,11 @@ export default function HomePage() {
                 Join thousands of students who are already learning smarter, not harder, with our AI-powered platform.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-[#9efa35] text-black hover:bg-[#8de42d]">
+                <Button onClick={() => router.push("/dashboard")} size="lg" className="bg-[#9efa35] text-black hover:bg-[#8de42d]">
                   Sign Up Free
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                  Schedule Demo
+                <Button onClick={() => router.push("/dashboard")} size="lg" variant="outline" className="border-white text-black hover:bg-white/10 hover:text-white">
+                  Log in
                 </Button>
               </div>
               <div className="flex items-center gap-4">

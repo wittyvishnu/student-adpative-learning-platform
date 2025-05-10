@@ -120,3 +120,48 @@
     @apply bg-background text-foreground;
   }
 }
+/* global.css */
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.spin-slow {
+  animation: spin 10s linear infinite;
+}
+
+.spin-reverse-slower {
+  animation: spin-reverse 15s linear infinite;
+}
+
+.wiggle {
+  animation: wiggle 1.5s ease-in-out infinite;
+}
+
+.float {
+  animation: float 2s ease-in-out infinite;
+}
+

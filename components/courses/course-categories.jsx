@@ -50,7 +50,7 @@ export default function CourseCategories() {
             <button
               key={course.id}
               onClick={() => handleCourseClick(course.id, course.name)} // Pass courseId and courseName to handleCourseClick
-              className="flex items-center gap-3 p-4 border rounded-lg hover:bg-gray-50 transition-colors w-full text-left"
+              className="flex items-center gap-3 p-4 border rounded-lg hover:bg-gray-50 transition-colors w-full text-left cursor-pointer"
             >
               <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
                 <BookIcon className="h-4 w-4" />

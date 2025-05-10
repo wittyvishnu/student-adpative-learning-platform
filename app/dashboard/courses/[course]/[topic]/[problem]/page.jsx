@@ -153,7 +153,7 @@ export default function ProblemPage() {
     <div className="container px-4 py-8 md:px-6">
       <div className="space-y-8">
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <Link href="/courses">Courses</Link>
+          <Link href="/dashboard/courses">Courses</Link>
           <span>{">"}</span>
           <Link href={`/dashboard/courses/${formattedCourse}`}>{decodedCourseName}</Link>
           <span>{">"}</span>

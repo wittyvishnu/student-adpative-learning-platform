@@ -16,7 +16,7 @@ export default function TopicPage() {
       <div className="space-y-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <Link href="/courses">Courses</Link>
+          <Link href="/dashboard/courses">Courses</Link>
           <span>{">"}</span>
           <span>{decodedCourseName}</span>
         </div>

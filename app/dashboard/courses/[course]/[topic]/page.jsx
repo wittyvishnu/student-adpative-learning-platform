@@ -39,18 +39,18 @@ export default function LearningDashboard() {
     try {
       setLoading(true);
       const decodedCourseName = course.replace(/-/g, " ").toLowerCase();
+      
       const decodedTopicName = topic.replace(/-/g, " ").toLowerCase();
       
-      debug.decodedCourseName = decodedCourseName;
-      debug.decodedTopicName = decodedTopicName;
-
+      
+      
       // Get course data
       const courseData = await db
         .select()
         .from(Courses)
         .where(sql`LOWER(${Courses.name}) = LOWER(${decodedCourseName})`);
       
-      debug.courseData = courseData;
+     
       console.log("Course data:", courseData);
 
       if (!courseData.length) {
@@ -254,7 +254,7 @@ export default function LearningDashboard() {
       Topic: ${topicInfo.name}
       
       Generate a coding question that helps the user improve in their weak areas.
-      the question should be  simple and mostly asked interview questions.(keep it simple)
+      the question should be  simple and mostly asked interview questions.give different questions for this prompt
       The question should follow this exact JSON format:
       {
         "title": "Question Title",
@@ -338,7 +338,7 @@ export default function LearningDashboard() {
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-5">
             <Link href="/dashboard/courses">Courses</Link>
             <span>{">"}</span>
-            <span>{topicInfo.course}</span>
+            <Link href={`/dashboard/courses/${course}`}>{topicInfo.course}</Link>
             <span>{">"}</span>
             <span>{topicInfo.name}</span>
           </div>
@@ -387,13 +387,7 @@ export default function LearningDashboard() {
             <div className="text-center py-8">
               <div className="text-gray-500 mb-4">No Questions Available</div>
               
-              {/* Debug information - remove in production */}
-              {debugInfo && (
-                <div className="mt-4 p-4 bg-gray-100 rounded-lg text-left text-xs overflow-auto max-h-96">
-                  <h3 className="font-bold mb-2">Debug Information:</h3>
-                  <pre>{JSON.stringify(debugInfo, null, 2)}</pre>
-                </div>
-              )}
+              
             </div>
           ) : (
             questions.map((item, index) => (

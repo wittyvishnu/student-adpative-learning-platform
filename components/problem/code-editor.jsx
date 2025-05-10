@@ -1,4 +1,3 @@
-"use client";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { db } from "@/utils/db";
@@ -83,11 +82,11 @@ export default function CodeEditor({ solveQuestion }) {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const { language, setLanguage, code, setCode ,setSubmittedCode} = useAnswerStore();
 
-useEffect(() => {
-  if (!code) {
-    setCode(languageTemplates[language]);
-  }
-}, [language, code, setCode]);
+  useEffect(() => {
+    if (!code) {
+      setCode(languageTemplates[language]);
+    }
+  }, [language, code, setCode]);
 
   
   const timerRef = useRef(null);
@@ -213,7 +212,7 @@ useEffect(() => {
       setStatusMessage("Custom input executed successfully!");
       
       // Set the submitted code in the store
-      setSubmittedCode(code); // <-- Add this line
+      setSubmittedCode(code);
       
     } catch (error) {
       setOutput("Failed to connect to the execution service.");
@@ -223,6 +222,7 @@ useEffect(() => {
       setIsRunning(false);
     }
   };
+
   const runCode = async (isSubmission = false) => {
     const testCases = isSubmission 
       ? solveQuestion.question.testcasesForSubmit 
@@ -370,8 +370,8 @@ useEffect(() => {
   return (
     <div className="space-y-4 max-w-4xl mx-auto p-4">
       {/* Header with timer and controls */}
-      <div className="flex justify-between items-center bg-white dark:bg-gray-800 p-3 rounded-lg shadow">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-white dark:bg-gray-800 p-3 rounded-lg shadow">
+        <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
           <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-md">
             <Clock className="h-4 w-4 text-gray-500 dark:text-gray-400" />
             <span className="font-mono text-sm">{formatTime(elapsedTime)}</span>
@@ -393,10 +393,10 @@ useEffect(() => {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full md:w-auto">
           <span className="text-sm font-medium">Language</span>
           <Select value={language} onValueChange={handleLanguageChange}>
-            <SelectTrigger className="w-[120px] h-8">
+            <SelectTrigger className="w-full md:w-[120px] h-8">
               <SelectValue placeholder="Language" />
             </SelectTrigger>
             <SelectContent>
@@ -476,11 +476,11 @@ useEffect(() => {
       </div>
 
       {/* Controls */}
-      <div className="flex justify-between">
-        <div>
+      <div className="flex flex-col gap-4 md:flex-row md:justify-between">
+        <div className="flex flex-col sm:flex-row gap-2">
           <Button
             variant="outline"
-            className="text-sm flex items-center gap-2"
+            className="text-sm flex items-center gap-2 w-full sm:w-auto"
             onClick={() => document.getElementById("file-upload")?.click()}
           >
             <Upload className="h-4 w-4" />
@@ -494,10 +494,10 @@ useEffect(() => {
             onChange={handleFileUpload}
           />
         </div>
-        <div className="flex  gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <Button
             variant="outline"
-            className="text-sm"
+            className="text-sm w-full sm:w-auto"
             onClick={() => {
               const tabsElement = document.getElementById("output-tabs");
               if (tabsElement) {
@@ -510,30 +510,32 @@ useEffect(() => {
           >
             Test with custom input
           </Button>
-          <Button
-            className="text-sm bg-black text-white hover:bg-gray-800 flex items-center gap-2"
-            onClick={() => runCode(false)}
-            disabled={isRunning}
-          >
-            {isRunning ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Play className="h-4 w-4" />
-            )}
-            Run Code
-          </Button>
-          <Button
-            className="text-sm bg-[#9efa35] text-black hover:bg-[#8de42d] flex items-center gap-2"
-            onClick={() => runCode(true)}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Send className="h-4 w-4" />
-            )}
-            Submit Code
-          </Button>
+          <div className="flex flex-col xs:flex-row gap-2 sm:flex-row">
+            <Button
+              className="text-sm bg-black text-white hover:bg-gray-800 flex items-center gap-2 w-full sm:w-auto"
+              onClick={() => runCode(false)}
+              disabled={isRunning}
+            >
+              {isRunning ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Play className="h-4 w-4" />
+              )}
+              Run Code
+            </Button>
+            <Button
+              className="text-sm bg-[#9efa35] text-black hover:bg-[#8de42d] flex items-center gap-2 w-full sm:w-auto"
+              onClick={() => runCode(true)}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
+              Submit Code
+            </Button>
+          </div>
         </div>
       </div>
 
