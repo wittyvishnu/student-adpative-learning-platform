@@ -246,7 +246,7 @@ export default function HomePage() {
           </div>
 
           <div className="mt-12 text-center">
-            <Button size="lg" className="bg-black text-white hover:bg-gray-800">
+            <Button onClick={() => router.push("/dashboard")} size="lg" className="bg-black text-white hover:bg-gray-800">
               Start Your Journey
             </Button>
           </div>
