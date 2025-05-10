@@ -23,7 +23,7 @@ export default function DashBoardPage() {
         At Positivus, we help businesses grow by combining creativity, innovation, and data-driven strategies. Together, we build a future of shared success.
       </p>
       <div className="flex gap-4 justify-center lg:justify-start">
-      <Button onClick={() => router.push("/dashboard/course")} className="bg-[#9efa35] text-black px-6 py-2 rounded-md font-semibold hover:bg-white border-2 border-[#9efa35] transition-colors duration-300 ease-in-out transform hover:scale-105">
+      <Button onClick={() => router.push("https://pin-it-ten.vercel.app/dashboard")} className="bg-[#9efa35] text-black px-6 py-2 rounded-md font-semibold hover:bg-white border-2 border-[#9efa35] transition-colors duration-300 ease-in-out transform hover:scale-105">
         Take the Mock interview
       </Button>
 

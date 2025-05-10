@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/layout/theme-provider";
 import {
   ClerkProvider,
 } from '@clerk/nextjs';
+import { icons } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,6 +21,10 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Pin IT",
   description: "student adapative learning platform",
+  icons: {
+    icon: "/image.png",
+    
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -28,7 +33,6 @@ export default function RootLayout({ children }) {
       <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <body>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-
           {children}
         </ThemeProvider>
         </body>
