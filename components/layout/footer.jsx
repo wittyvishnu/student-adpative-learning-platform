@@ -35,7 +35,7 @@ export default function Footer() {
                 Contact us:
               </div>
               <div className="space-y-1">
-                <p className="text-sm">Email: info@positivus.com</p>
+                <p className="text-sm">Email: info@pinit.com</p>
                 <p className="text-sm">Phone: 555-567-8901</p>
               </div>
               <div className="flex gap-4 items-center">

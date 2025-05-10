@@ -137,7 +137,7 @@ export default function HomePage() {
             <div className="inline-block bg-[#9efa35] px-4 py-1 text-sm font-medium rounded-full mb-4">
               Our Features
             </div>
-            <h2 className="text-3xl font-bold md:text-4xl">How Positivus Helps You Learn</h2>
+            <h2 className="text-3xl font-bold md:text-4xl">How Pin IT Helps You Learn</h2>
             <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
               Our platform uses advanced AI to create a personalized learning experience that adapts to your needs and
               helps you achieve your goals faster.
